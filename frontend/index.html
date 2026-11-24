@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareVoice Clinic — Voice Appointments</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="mark" aria-hidden="true"><span class="pulse"></span></span>
+    <div>
+      <h1>CareVoice Clinic</h1>
+      <p>Doctor appointments, by voice</p>
+    </div>
+  </div>
+  <div class="top-actions">
+    <span id="modePill" class="pill">Checking…</span>
+    <button id="resetBtn" class="ghost-btn" title="Reset demo data">Reset demo</button>
+    <button id="tryCallBtn" class="call-btn">Try Call</button>
+  </div>
+</header>
+
+<main>
+  <section class="stats" id="stats">
+    <div class="stat"><span class="stat-num" id="statDoctors">–</span><span class="stat-label">Doctors on duty</span></div>
+    <div class="stat"><span class="stat-num" id="statSlots">–</span><span class="stat-label">Free slots · next 3 days</span></div>
+    <div class="stat"><span class="stat-num" id="statBooked">–</span><span class="stat-label">Appointments booked</span></div>
+    <div class="stat"><span class="stat-num" id="statNext">–</span><span class="stat-label">Next appointment</span></div>
+  </section>
+
+  <section class="grid">
+    <div class="panel doctors-panel">
+      <div class="panel-head">
+        <h2>Doctors &amp; slots</h2>
+        <span class="hint" id="slotDateLabel"></span>
+      </div>
+      <div id="doctorsList" class="doctors"></div>
+      <p class="fine">Tap a slot to use it in the call. Fees are per consultation.</p>
+    </div>
+
+    <div class="panel appts-panel">
+      <div class="panel-head">
+        <h2>Appointments</h2>
+        <span class="hint">Updates live, as the agent books or cancels</span>
+      </div>
+      <table class="appts">
+        <thead><tr><th>ID</th><th>Patient</th><th>Doctor</th><th>When</th><th>Status</th></tr></thead>
+        <tbody id="apptsBody"></tbody>
+      </table>
+      <p class="fine" id="apptsEmpty">No appointments yet — start a call and book one.</p>
+    </div>
+  </section>
+
+  <section class="how">
+    <div><span class="step">1</span><p><strong>Call Maya.</strong> Say your phone number — that is how she knows you.</p></div>
+    <div><span class="step">2</span><p><strong>Pick a doctor and a slot.</strong> She reads the free times out loud.</p></div>
+    <div><span class="step">3</span><p><strong>Confirm.</strong> She reads everything back before booking or cancelling.</p></div>
+  </section>
+</main>
+
+<!-- Phone call overlay -->
+<div id="phoneOverlay" class="overlay" hidden>
+  <div class="phone" role="dialog" aria-label="Voice call">
+    <div class="phone-notch"></div>
+    <div class="phone-head">
+      <div class="caller">
+        <span class="avatar">M</span>
+        <div>
+          <strong>Maya · CareVoice Clinic</strong>
+          <span id="callState">Ringing…</span>
+        </div>
+      </div>
+      <span id="callTimer" class="timer">00:00</span>
+    </div>
+
+    <canvas id="wave" width="300" height="56" aria-hidden="true"></canvas>
+
+    <div id="confirmCard" class="confirm-card" hidden></div>
+
+    <div id="phoneTranscript" class="phone-transcript"></div>
+
+    <div class="phone-input">
+      <input id="typeBox" type="text" placeholder="Type instead of speaking…" autocomplete="off">
+      <button id="sendBtn" aria-label="Send">↑</button>
+    </div>
+    <p class="phone-mode" id="phoneMode"></p>
+
+    <div class="phone-controls">
+      <button id="micBtn" class="round-btn" aria-label="Mute microphone">🎙</button>
+      <button id="speakerBtn" class="round-btn" aria-label="Speaker">🔊</button>
+      <button id="endBtn" class="end-btn" aria-label="End call">✕ End</button>
+    </div>
+  </div>
+</div>
+
+<audio id="remoteAudio" autoplay playsinline></audio>
+<script src="app.js"></script>
+</body>
+</html>
